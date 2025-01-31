@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3ce52slwkvef"]
+
+[ext_resource type="Script" path="res://start.gd" id="1_5wupr"]
+
+[sub_resource type="SystemFont" id="SystemFont_4pi04"]
+
+[node name="Start" type="Node2D"]
+script = ExtResource("1_5wupr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.0862745, 0.0862745, 0.203922, 1)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 465.0
+offset_top = 456.0
+offset_right = 588.0
+offset_bottom = 487.0
+scale = Vector2(2, 2)
+text = "START"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 282.0
+offset_top = 265.0
+offset_right = 434.0
+offset_bottom = 291.0
+scale = Vector2(4, 4)
+theme_override_fonts/font = SubResource("SystemFont_4pi04")
+text = "SPACE ADVENTURE"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://g1oge0wdr71c"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_1g82m"]
+[ext_resource type="Texture2D" uid="uid://cq237ydobelc3" path="res://Space Theme/PNG/Sprites/Ships/spaceShips_003.png" id="2_m5ftc"]
+[ext_resource type="PackedScene" uid="uid://b10yo61gf8n5w" path="res://laser.tscn" id="3_fgsqm"]
+[ext_resource type="Texture2D" uid="uid://cebp4f0qeuo31" path="res://SonicExplosion/sonicExplosion00.png" id="4_kmsow"]
+[ext_resource type="Texture2D" uid="uid://bakexmmww33cb" path="res://SonicExplosion/sonicExplosion08.png" id="5_a3754"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rgsag"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kmsow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a3754")
+}],
+"loop": false,
+"name": &"laserShoot",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"load",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_1g82m")
+Laser = ExtResource("3_fgsqm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(45, 12)
+rotation = 4.71239
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_m5ftc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Laser" type="Marker2D" parent="."]
+position = Vector2(91, 12)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(68, 12)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_rgsag")
+animation = &"laserShoot"
+autoplay = "load"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(24, -13, 59, -3, 59, 3, 67, 6, 67, 18, 59, 21, 59, 27, 23, 37, 23, 28, 29, 20, 34, 17, 22, 17, 22, 7, 33, 7, 29, 5, 23, -4, 23, -13)
+
+[node name="CoolDown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="CoolDown" to="." method="_on_cool_down_timeout"]

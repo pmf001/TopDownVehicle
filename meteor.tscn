@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b424p03xo6lvq"]
+
+[ext_resource type="Script" path="res://StaticBody2D.gd" id="1_f5xao"]
+[ext_resource type="Texture2D" uid="uid://dayi0h2ykfmtc" path="res://Space Theme/PNG/Sprites X2/Meteors/spaceMeteors_001.png" id="1_fegfv"]
+
+[node name="Meteor" type="Node2D" groups=["meteor", "obstacles"]]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["meteor"]]
+script = ExtResource("1_f5xao")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_fegfv")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+visible = false
+polygon = PackedVector2Array(5, -110, 70, -84, 104, -25, 101, 42, 67, 100, 2, 112, -66, 91, -101, 34, -105, -33, -61, -79)

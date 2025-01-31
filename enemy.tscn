@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://bty0ks1fhj5n7"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_2m2j0"]
+[ext_resource type="Texture2D" uid="uid://cecc8u414d8ou" path="res://Space Theme/PNG/Sprites/Ships/spaceShips_007.png" id="1_ge3mp"]
+[ext_resource type="PackedScene" uid="uid://blgou5xew3cj7" path="res://enemy_laser.tscn" id="3_05gar"]
+[ext_resource type="Texture2D" uid="uid://cebp4f0qeuo31" path="res://SonicExplosion/sonicExplosion00.png" id="3_utldr"]
+[ext_resource type="Texture2D" uid="uid://bakexmmww33cb" path="res://SonicExplosion/sonicExplosion08.png" id="4_nvdoc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qeo1g"]
+radius = 132.774
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aso13"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_utldr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nvdoc")
+}],
+"loop": false,
+"name": &"enemyLaserShoot",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"enemyLoad",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+modulate = Color(0, 0.894118, 0.968627, 1)
+script = ExtResource("1_2m2j0")
+EnemyLaser = ExtResource("3_05gar")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ge3mp")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+rotation = 3.14159
+polygon = PackedVector2Array(-69, -83, -37, -84, -10, -49, 6, -48, 9, -45, 25, -63, 36, -54, 75, -68, 79, -61, 63, -48, 62, -32, 58, -26, 37, -26, 30, -15, 32, -8, 32, 8, 28, 14, 36, 26, 57, 26, 64, 32, 64, 48, 79, 57, 75, 68, 34, 55, 23, 62, 9, 46, 5, 49, -8, 49, -38, 85, -69, 83, -71, 63, -44, 39, -29, 47, -27, 44, -34, 39, -47, 33, -47, 22, -26, 22, -21, 15, -21, -15, -27, -24, -27, -24, -47, -24, -47, -35, -33, -35, -27, -45, -44, -39, -71, -63)
+
+[node name="FarDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FarDetection"]
+visible = false
+position = Vector2(-1, 0)
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_qeo1g")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="CoolDown" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[node name="Shoot1" type="Marker2D" parent="."]
+position = Vector2(70.2, -27.8)
+
+[node name="Fire1" type="AnimatedSprite2D" parent="."]
+position = Vector2(70.2, -27.8)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_aso13")
+animation = &"enemyLaserShoot"
+autoplay = "enemyLoad"
+
+[node name="Shoot2" type="Marker2D" parent="."]
+position = Vector2(70.2, 27.2)
+
+[node name="Fire2" type="AnimatedSprite2D" parent="."]
+position = Vector2(70.2, 27.2)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_aso13")
+animation = &"enemyLaserShoot"
+autoplay = "enemyLoad"
+
+[connection signal="body_entered" from="FarDetection" to="." method="_on_far_detection_body_entered"]
+[connection signal="body_exited" from="FarDetection" to="." method="_on_far_detection_body_exited"]
+[connection signal="timeout" from="CoolDown" to="." method="_on_cool_down_timeout"]
+[connection signal="animation_finished" from="Fire1" to="." method="_on_fire_1_animation_finished"]
+[connection signal="animation_finished" from="Fire2" to="." method="_on_fire_2_animation_finished"]

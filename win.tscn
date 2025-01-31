@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmctdpcbj1dai"]
+
+[ext_resource type="Script" path="res://start.gd" id="1_l84nf"]
+
+[sub_resource type="SystemFont" id="SystemFont_4pi04"]
+
+[node name="Win" type="Node2D"]
+script = ExtResource("1_l84nf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.0862745, 0.0862745, 0.203922, 1)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 465.0
+offset_top = 456.0
+offset_right = 588.0
+offset_bottom = 487.0
+scale = Vector2(2, 2)
+text = "GO BACK"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 195.0
+offset_top = 264.0
+offset_right = 385.0
+offset_bottom = 290.0
+scale = Vector2(4, 4)
+theme_override_fonts/font = SubResource("SystemFont_4pi04")
+text = "MISSION ACCOMPLISHED"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed" flags=18]
